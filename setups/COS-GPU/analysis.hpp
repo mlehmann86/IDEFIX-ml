@@ -1,0 +1,36 @@
+#ifndef ANALYSIS_HPP_
+#define ANALYSIS_HPP_
+
+#include "idefix.hpp"
+#include "input.hpp"
+#include "output.hpp"
+#include "grid.hpp"
+#include "dataBlock.hpp"
+#include "dataBlockHost.hpp"
+#include <iostream>
+#include <fstream>
+#include "cos.hpp"
+
+class Analysis {
+ public:
+  // Constructor from Setup arguments
+  Analysis(Input&, Grid&, DataBlock& , Output&, std::string);
+  void ResetAnalysis();
+  void PerformAnalysis(DataBlock &);
+
+ private:
+  double Average(const int, int[]);
+  void WriteField(double);
+  double MaxdV();
+  double AverageAMF();
+  DataBlockHost *d;
+  Grid *grid;
+
+  int precision;
+  real shear;
+  std::string filename;
+
+  std::ofstream file;
+};
+
+#endif // ANALYSIS_HPP__
