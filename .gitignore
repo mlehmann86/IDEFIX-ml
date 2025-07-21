@@ -1,0 +1,12 @@
+outputs/
+reference/
+*.out
+*.err
+*.dat
+*.vtk
+*.log
+*.pyc
+*.o
+*.mod
+cmake-build*/
+build/
