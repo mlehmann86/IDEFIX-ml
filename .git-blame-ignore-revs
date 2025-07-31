@@ -1,0 +1,11 @@
+# This file lists commits that should be ignored by `git blame`
+# To config your local clone to systematically take this into account,
+# from the top level, run
+# $ git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# auto-fix trailing whitespace and tabs+space mixing with pre-commit hooks
+467f543f256823da2852b35707fda55dfb007405
+
+# apply inifix-format to all .ini files
+ac260f4af48221229aef4fc1f93ffbf9df450739
+1ca7676fee7a578bd64e64ec9b6bdfbceb921775

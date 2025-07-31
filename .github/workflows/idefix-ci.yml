@@ -1,0 +1,48 @@
+name: Idefix CIs
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+
+jobs:
+  Linter:
+    # Don't do this in forks
+    if: ${{ github.repository == 'idefix-code/idefix' || github.repository == 'glesur/idefix' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: pre-commit/action@v3.0.0
+      - uses: pre-commit-ci/lite-action@v1.0.0
+        if: always()
+
+  icc-jobs:
+    needs: Linter
+    name: CPU Jobs (intel OneApi)
+    uses: ./.github/workflows/idefix-ci-jobs.yml
+    with:
+      TESTME_OPTIONS: -intel -Werror
+      IDEFIX_COMPILER: icc
+
+  gcc-jobs:
+    needs: Linter
+    name: CPU Jobs (gcc)
+    uses: ./.github/workflows/idefix-ci-jobs.yml
+    with:
+      TESTME_OPTIONS: -Werror
+      IDEFIX_COMPILER: gcc
+
+  cuda-jobs:
+    needs: Linter
+    name: CUDA Jobs
+    uses: ./.github/workflows/idefix-ci-jobs.yml
+    with:
+      TESTME_OPTIONS: -cuda -Werror
+      IDEFIX_COMPILER: nvcc
